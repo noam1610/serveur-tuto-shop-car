@@ -17,10 +17,27 @@ The server should be able to:
 * Get the cash available in the store
 
 
-## Generate the serveur
+### Generate the serveur
+
+This command will generate the server:
 
 ```bash
 lb
 ```
+By default, if you choose to build an API, you will get a built-in model: User
+
+### Add Model
+
+We need two models Car and Shop.
+Let's generate them:
+
+```bash
+lb model
+```
+
+### Add relations between models
+
+Let's have a look to our
+
 
 
