@@ -95,7 +95,7 @@ Shop.cashAvailable = function(shopId, cb) {
         cb(null, cashAvailable);
     });
 };
-``
+```
 
 #### buyCar
 
