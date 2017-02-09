@@ -88,19 +88,94 @@ Shop.remoteMethod(
 In the shop.js file define:
 
 ```javascript
-    Shop.cashAvailable = function(shopId, cb) {
-        Shop.findById(shopId, function(err, instance) {
-            console.log('instance', instance);
-            var cashAvailable = instance.cash;
-            cb(null, cashAvailable);
+Shop.cashAvailable = function(shopId, cb) {
+    Shop.findById(shopId, function(err, instance) {
+        console.log('instance', instance);
+        var cashAvailable = instance.cash;
+        cb(null, cashAvailable);
+    });
+};
+``
+
+#### buyCar
+
+We want now to add a function to buyCar.
+To handle the state of the car we will use a status property which values can be:
+* product: the car has been producted but is not in a shop
+* store: the car belongs to a shop
+* custom: the car has been bought from the store
+
+
+#####Define the function on the API
+
+In the shop.js file, add
+
+```javascript
+ Shop.remoteMethod(
+        'buyCar', {
+            http: {
+                path: '/buyCar',
+                verb: 'get'
+            },
+            accepts: [{
+                arg: 'ShopId',
+                type: 'string',
+                required: true
+            }, {
+                arg: 'CarId',
+                type: 'string',
+                required: true
+            }],
+            returns: {
+                arg: 'reponse',
+                type: 'number'
+            }
+        }
+    );
+```
+
+#####Define the function itself
+
+In the shop.js file define:
+
+```nodejs
+Shop.buyCar = function(shopId, carId, cb) {
+
+        //From shop.js we need to access Car model
+        var Car = Shop.app.models.Car;
+
+        //get the Shop instance with the right id
+        Shop.findById(shopId, function(err, instanceShop) {
+            //get the Car instance with the right id
+            Car.findById(carId, function(err2, instanceCar) {
+                //Depending on the state of the car
+                if (instanceCar != null) {
+                    switch (instanceCar.status) {
+                        case "product":
+                            instanceCar.status = "store";
+                            Car.upsert(instanceCar);
+                            instanceShop.cash -= instanceCar.price;
+                            Shop.upsert(instanceShop);
+                            cb(null, "success");
+                            break;
+                        case "store":
+                            cb(null, "Already belong to a store");
+                            break;
+                        case "custom":
+                            instanceCar.status = "store";
+                            Car.upsert(instanceCar);
+                            instanceShop.cash -= instanceCar.price;
+                            Shop.upsert(instanceShop);
+                            cb(null, "You buy a second-hand car");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
         });
     };
 ```
-
-
-
-
-
 
 
 

@@ -1,23 +1,28 @@
 {
-  "name": "Car",
-  "base": "PersistedModel",
-  "idInjection": true,
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "name": {
-      "type": "string",
-      "required": true
+    "name": "Car",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
     },
-    "price": {
-      "type": "number",
-      "required": true,
-      "default": 0
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": {}
+    "properties": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "price": {
+            "type": "number",
+            "required": true,
+            "default": 0
+        },
+        "status": {
+            "type": "string",
+            "required": true,
+            "default": "product"
+        }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
 }
