@@ -14,7 +14,7 @@ Our goal in this project is just to provide some training code and a tutorial to
 We will try to build a server for manganing shops of cars.
 The server should be able to: 
 * Create a shop with starting cash
-* A shop can buy buy and sell cars
+* A shop can buy and sell cars
 * Get the cash available in the store
 
 
@@ -46,3 +46,15 @@ So we will use a **HasMany** relation.
 ```bash
 lb relation
 ```
+
+### Add remote method
+
+#### cashAvailable
+
+The first and easiest method we have to implement is cashAvailable.
+It is aimed to give the current cash available.
+
+|Type|Input|Output|
+| ------------- |:-------------:| -----:|
+| GET | id | cashAvailable |
+
