@@ -153,6 +153,10 @@ Shop.buyCar = function(shopId, carId, cb) {
                     switch (instanceCar.status) {
                         case "product":
                             instanceCar.status = "store";
+
+                            //Allow to link the car and the shop
+                            instanceCar.shopId = shopId;
+
                             Car.upsert(instanceCar);
                             instanceShop.cash -= instanceCar.price;
                             Shop.upsert(instanceShop);
