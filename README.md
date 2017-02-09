@@ -138,7 +138,7 @@ In the shop.js file, add
 
 In the shop.js file define:
 
-```nodejs
+```javascript
 Shop.buyCar = function(shopId, carId, cb) {
 
         //From shop.js we need to access Car model
