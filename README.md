@@ -55,6 +55,52 @@ The first and easiest method we have to implement is cashAvailable.
 It is aimed to give the current cash available.
 
 |Type|Input|Output|
-| ------------- |:-------------:| -----:|
+|---|---|---|
 | GET | id | cashAvailable |
+
+#####Define the function on the API
+
+In the shop.js file, add
+
+```javascript
+Shop.remoteMethod(
+        'cashAvailable', {
+            http: {
+                path: '/cashAvailable',
+                verb: 'get'
+            },
+            accepts: {
+                arg: 'id',
+                type: 'string',
+                http: {
+                    source: 'query'
+                }
+            },
+            returns: {
+                arg: 'cashAvailable',
+                type: 'number'
+            }
+        }
+    );
+```
+#####Define the function itself
+
+In the shop.js file define:
+
+```javascript
+    Shop.cashAvailable = function(shopId, cb) {
+        Shop.findById(shopId, function(err, instance) {
+            console.log('instance', instance);
+            var cashAvailable = instance.cash;
+            cb(null, cashAvailable);
+        });
+    };
+```
+
+
+
+
+
+
+
 
